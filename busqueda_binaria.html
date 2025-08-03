@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block title %}Búsqueda Binaria{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2><i class="bi bi-tree"></i> Búsqueda Binaria</h2>
+    <a href="/" class="btn btn-outline-success"><i class="bi bi-house"></i> Inicio</a>
+</div>
+<form method="post" class="mb-4">
+    <div class="row g-2 align-items-end">
+        <div class="col-md-3">
+            <label for="valor" class="form-label">Buscar Elemento</label>
+            <input type="number" class="form-control" id="valor" name="valor" value="{{ valor }}" placeholder="Ej: 33">
+        </div>
+        <div class="col-md-5">
+            <label for="lista" class="form-label">Lista Ordenada</label>
+            <input type="text" class="form-control" id="lista" name="lista" value="{{ lista|join(', ') }}" placeholder="Ej: 3, 15, 31, 32, 33, 35, 36">
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-success w-100"><i class="bi bi-search"></i> Buscar</button>
+        </div>
+        <div class="col-md-2">
+            <button type="submit" name="generar" value="1" class="btn btn-secondary w-100"><i class="bi bi-shuffle"></i> Generar Nuevos Datos</button>
+        </div>
+    </div>
+</form>
+<div class="row">
+    <div class="col-md-7">
+        <h5><i class="bi bi-table"></i> Lista Ordenada</h5>
+        <table class="table table-bordered table-sm align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Índice</th>
+                    <th>Valor</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% if resultado %}
+                {% for item in resultado %}
+                <tr class="{% if item.estado == '¡Encontrado!' %}table-success{% elif item.estado == 'Revisado' %}table-warning{% endif %}">
+                    <td>{{ item.indice }}</td>
+                    <td>{{ item.valor }}</td>
+                    <td>{{ item.estado }}</td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                {% for i, v in enumerate(lista) %}
+                <tr>
+                    <td>{{ i }}</td>
+                    <td>{{ v }}</td>
+                    <td>No revisado</td>
+                </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-5">
+        <h5><i class="bi bi-clipboard-check"></i> Resultados</h5>
+        <div class="card">
+            <div class="card-body">
+                {% set encontrado = (resultado|selectattr('estado', 'equalto', '¡Encontrado!')|list)[0] if (resultado|selectattr('estado', 'equalto', '¡Encontrado!')|list) else None %}
+                {% if encontrado %}
+                    <div class="alert alert-success">
+                        <i class="bi bi-check-circle"></i> ¡Elemento encontrado!<br>
+                        <b>Posición:</b> {{ encontrado.indice }}<br>
+                        <b>Valor:</b> {{ encontrado.valor }}
+                    </div>
+                {% elif resultado %}
+                    <div class="alert alert-danger">
+                        <i class="bi bi-x-circle"></i> Elemento no encontrado
+                    </div>
+                {% else %}
+                    <div class="alert alert-info">
+                        Ingresa un valor y presiona buscar.
+                    </div>
+                {% endif %}
+                <hr>
+                <b>Comparaciones:</b> {{ comparaciones }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

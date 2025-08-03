@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Algoritmos de Búsqueda{% endblock %}
+{% block content %}
+<div class="text-center mb-5">
+    <h1 class="display-4 text-primary"><i class="bi bi-search"></i> Algoritmos de Búsqueda</h1>
+    <p class="lead">Explora y visualiza algoritmos de búsqueda secuencial y binaria</p>
+</div>
+<div class="row justify-content-center">
+    <div class="col-md-4">
+        <div class="card shadow-sm mb-4">
+            <div class="card-body text-center">
+                <i class="bi bi-list display-3 text-primary"></i>
+                <h5 class="card-title mt-3">Búsqueda Secuencial</h5>
+                <p class="card-text">Recorre la lista elemento por elemento hasta encontrar el valor buscado. Complejidad: O(n)</p>
+                <a href="/secuencial" class="btn btn-primary"><i class="bi bi-play-fill"></i> Probar Búsqueda Secuencial</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card shadow-sm mb-4">
+            <div class="card-body text-center">
+                <i class="bi bi-tree display-3 text-success"></i>
+                <h5 class="card-title mt-3">Búsqueda Binaria</h5>
+                <p class="card-text">Divide la lista por la mitad en cada iteración. Requiere lista ordenada. Complejidad: O(log n)</p>
+                <a href="/binaria" class="btn btn-success"><i class="bi bi-play-fill"></i> Probar Búsqueda Binaria</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
